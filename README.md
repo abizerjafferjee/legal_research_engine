@@ -1,2 +1,2 @@
-# legalx
-A legal research engine for Canadian Case Law
+# vc_legal
+A legal research engine powered by Watson
