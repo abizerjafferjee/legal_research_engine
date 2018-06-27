@@ -3,34 +3,33 @@ var pg            = require('pg');
 var PythonShell   = require('python-shell');
 var jwt           = require('jsonwebtoken');
 var secret        = 'mySecret';
-var ml_model      = '//home//bitnami//projects//legalx//App//Routes//my_python.py';
 var nodemailer    = require('nodemailer');
 var request       = require('request');
 var util          = require('util');
 
 var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 // WATSON ENVIRONMENT PARAMETERS
-collection_id = '0f01bb27-4154-4995-9887-577be72218f2';
-configuration_id = 'b79654d2-76d8-48e1-be0b-5601a9738daf';
-environment_id = '18d60b1b-d3eb-4a55-9a9b-0fd9a3281aa7';
+collection_id = '';
+configuration_id = '';
+environment_id = '';
 
 module.exports = function(router) {
 
   // WATSON CREDENTIALS
   var discovery = new DiscoveryV1({
-    username: "0878e83e-37b8-4e8a-bd8f-9be48e1ac754",
-    password: "YGCfaBJTwi3S",
-    version_date: '2017-11-07'
+    username: "",
+    password: "",
+    version_date: ''
   });
 
   // EMAIL CREDENTIALS
   var transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: '',
     secure: false,
     port: 25,
     auth: {
-      user: 'legalxstartup@gmail.com',
-      pass: 'legalx1234'
+      user: '',
+      pass: ''
     }
   });
 
@@ -71,11 +70,10 @@ module.exports = function(router) {
           }
         } else {
           var mailOptions = {
-            from: 'VisonClerk Staff <legalxstartup@gmail.com>',
+            from: '',
             to: user.email,
-            subject: 'VisonClerk Account Activation link',
-            text: 'Hello ' + user.username + ', Thank you for registering at VisonClerk.com. Please click on the link below to complete your activation: http://www.visionclerk.com/activate/' + user.temporarytoken,
-            html: 'Hello <strong> ' + user.username + '</strong>,<br><br>Thank you for registering at VisonClerk.com. Please click on the link below to complete your activation.<br><br><a href="http://www.visionclerk.com/activate/' + user.temporarytoken + '">http://www.visionclerk.com/activate/</a>'
+            subject: 'Account Activation link',
+            text: 'Hello ' + user.username + ', Thank you for registering at .com. Please click on the link below to complete your activation: http://www..com/activate/' + user.temporarytoken,
           };
 
           transporter.sendMail(mailOptions, function(err, info){
@@ -138,11 +136,11 @@ module.exports = function(router) {
 
 
               var mailOptions = {
-                from: 'VisonClerk Staff <legalxstartup@gmail.com>',
+                from: '',
                 to: user.email,
-                subject: 'VisonClerk Account Activation link',
+                subject: 'Account Activation link',
                 text: 'Hello' + user.username + ', Your account has been successfully activated!',
-                html: 'Hello<strong> ' + user.username + '</strong>,<br><br> Your VisonClerk account has been successfully activated!'
+                html: 'Hello<strong> ' + user.username + '</strong>,<br><br> Your account has been successfully activated!'
               };
 
               transporter.sendMail(mailOptions, function(err, info){
@@ -195,11 +193,11 @@ module.exports = function(router) {
           console.log(err);
         } else {
           var mailOptions = {
-            from: 'VisonClerk Staff <legalxstartup@gmail.com>',
+            from: '',
             to: user.email,
-            subject: 'VisonClerk Account Activation link Request',
-            text: 'Hello ' + user.username + ', you recently requested a new account activation link at VisonClerk.com. Please click on the link below to complete your activation: http://www.visionclerk.com/activate/' + user.temporarytoken,
-            html: 'Hello <strong> ' + user.username + '</strong>,<br><br>You recently requested a new account activation link at VisonClerk.com. Please click on the link below to complete your activation.<br><br><a href="http://www.visionclerk.com/activate/' + user.temporarytoken + '">http://www.visionclerk.com/activate/</a>'
+            subject: 'Account Activation link Request',
+            text: 'Hello ' + user.username + ', you recently requested a new account activation link at . Please click on the link below to complete your activation: http://www..com/activate/' + user.temporarytoken,
+            html: 'Hello <strong> ' + user.username + '</strong>,<br><br>You recently requested a new account activation link at .com. Please click on the link below to complete your activation.<br><br><a href="http://www..com/activate/' + user.temporarytoken + '">http://www..com/activate/</a>'
           };
 
           transporter.sendMail(mailOptions, function(err, info){
@@ -227,9 +225,9 @@ module.exports = function(router) {
             res.json({ success: false, message: 'E-mail was not found!' });
           } else {
             var mailOptions = {
-              from: 'VisonClerk Staff <legalxstartup@gmail.com>',
+              from: '',
               to: user.email,
-              subject: 'VisonClerk Username Request',
+              subject: 'Username Request',
               text: 'Hello ' + user.username + ', you recently requested your username! Your username is: ' + user.username,
               html: 'Hello <strong> ' + user.username + '</strong>,<br><br>You recently requested your username! Your username is: ' + user.username
             };
@@ -265,11 +263,11 @@ module.exports = function(router) {
             res.json({ success: false, message: err });
           } else {
             var mailOptions = {
-              from: 'VisonClerk Staff <legalxstartup@gmail.com>',
+              from: '',
               to: user.email,
-              subject: 'VisonClerk Reset Password Request',
-              text: 'Hello ' + user.username + ', you recently requested a password reset link. Please click on the link below to reset your password: href="http://www.visionclerk.com/newpassword/' + user.resettoken,
-              html: 'Hello <strong> ' + user.username + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="http://www.visionclerk.com/newpassword/' + user.resettoken + '">http://www.visionclerk.com/newpassword/</a>'
+              subject: 'Reset Password Request',
+              text: 'Hello ' + user.username + ', you recently requested a password reset link. Please click on the link below to reset your password: href="http://www..com/newpassword/' + user.resettoken,
+              html: 'Hello <strong> ' + user.username + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="http://www..com/newpassword/' + user.resettoken + '">http://www..com/newpassword/</a>'
             };
 
             transporter.sendMail(mailOptions, function(err, info){
@@ -324,11 +322,11 @@ module.exports = function(router) {
             res.json({ success: false, message: err});
           } else {
             var mailOptions = {
-              from: 'VisonClerk Staff <legalxstartup@gmail.com>',
+              from: '',
               to: user.email,
-              subject: 'VisonClerk Reset Password',
-              text: 'Hello ' + user.username + ', this Email is to notify you that your password was recently reset at VisonClerk.com',
-              html: 'Hello <strong> ' + user.username + '</strong>,<br><br> This Email is to notify you that your password was recently reset at VisonClerk.com'
+              subject: 'Reset Password',
+              text: 'Hello ' + user.username + ', this Email is to notify you that your password was recently reset at .com',
+              html: 'Hello <strong> ' + user.username + '</strong>,<br><br> This Email is to notify you that your password was recently reset at .com'
             };
 
             transporter.sendMail(mailOptions, function(err, info){
@@ -388,7 +386,7 @@ module.exports = function(router) {
   // data to send: id | username | query | id/caserank | docid | score(0,1)
   router.post('/userfeedback', function(req, res) {
     // Connecting to the PSQL DB
-    var connectionString = 'postgres://legalmaster95:Oklnmgh**&@legalxinstance.clfgvqoltleg.ca-central-1.rds.amazonaws.com:5432/legalx_db';
+    var connectionString = '';
     var client = new pg.Client(connectionString);
     client.connect(err => {
       if (err) { throw err; }
